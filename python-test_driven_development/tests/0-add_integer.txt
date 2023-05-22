@@ -1,1 +1,132 @@
+#doctest_0-add_integer.py
+"""add_integer() returns the sum of two arguments"""
 
+>>> add_integer = __import__('0-add_integer').add_integer
+
+'pos ints'
+>>> add_integer(1,2)
+3
+
+'neg ints'
+>>> add_integer(-1, -2)
+-3
+
+'pos floats'
+>>> add_integer(1.2, 3.4)
+4
+
+'neg floats'
+>>> add_integer(-1.2, -3.4)
+-4
+
+'one arg'
+>>> add_integer(1)
+99
+
+'b empty'
+>>> add_integer(1,)
+99
+
+'a int, b string'
+>>> add_integer(1, "butt")
+Traceback (most recent call last):
+...
+TypeError: b must be an add_integer
+
+'b int, a string'
+>>> add_integer("butt", 1)
+Traceback (most recent call last):
+...
+TypeError: a must be an add_integer
+
+'a & b empty'
+>>> add_integer()
+Traceback (most recent call last):
+...
+TypeError: add_integer() missing 1 required positional argument: 'a'
+
+'a bool'
+>>> add_integer(False, 4)
+Traceback (most recent call last):
+...
+TypeError: a must be an integer
+
+'a tuple'
+>>> add_integer((3, 5), 4)
+Traceback (most recent call last):
+...
+TypeError: a must be an integer
+
+'a list'
+>>> add_integer([3, 5], 4)
+Traceback (most recent call last):
+...
+TypeError: a must be an integer
+
+'a dict'
+>>> add_integer({3, 5}, 4)
+Traceback (most recent call last):
+...
+TypeError: a must be an integer
+
+'b bool'
+>>> add_integer(3, False)
+Traceback (most recent call last):
+...
+TypeError: b must be an integer
+
+'b tuple'
+>>> add_integer(2, (3, 5))
+Traceback (most recent call last):
+...
+TypeError: b must be an integer
+
+'b list'
+>>> add_integer(5, [3, 5])
+Traceback (most recent call last):
+...
+TypeError: b must be an integer
+
+'b dict'
+>>> add_integer(8, {3, 5})
+Traceback (most recent call last):
+...
+TypeError: b must be an integer
+
+'a infinity float'
+>>> import sys
+>>> add_integer(sys.float_info.max + 1e292)
+Traceback (most recent call last):
+...
+TypeError: a must be an integer
+
+'b infinity float'
+>>> import sys
+>>> add_integer(3, sys.float_info.max + 1e292)
+Traceback (most recent call last):
+...
+TypeError: b must be an integer
+
+'a is nan'
+>>> add_integer(float('nan'))
+Traceback (most recent call last):
+...
+TypeError: a must be an integer
+
+'b is nan'
+>>> add_integer(3, float('nan'))
+Traceback (most recent call last):
+...
+TypeError: b must be an integer
+
+'a is inf'
+>>> add_integer(float('inf'))
+Traceback (most recent call last):
+...
+TypeError: a must be an integer
+
+'b is inf'
+>>> add_integer(3, float('inf'))
+Traceback (most recent call last):
+...
+TypeError: b must be an integer
