@@ -62,10 +62,8 @@ class Rectangle:
             return string
 
     def __repr__(self):
-        """Return literal string representation"""
-        return "Rectangle(" + str(self.__width) + ", " + str(self.__height) +\
-            ")"
+        return ("Rectangle ({}, {})".format(self.width, self.height))
 
     def __del__(self):
-        type(self).number_of_instances -= 1
+        Rectangle.number_of_instances -= 1
         print("Bye rectangle...")
