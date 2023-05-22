@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-the tangle of rec
-"""
+"""the tangle of rec"""
 
 
 class Rectangle:
