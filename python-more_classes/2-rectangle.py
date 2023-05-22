@@ -1,7 +1,7 @@
 #!/usr/bin/python3
-#2-rectangle.py
+# 2-rectangle.py
 """
-A class Rectangle that defines a rectangle:
+A class Rectangle that defines a rectangle
 """
 
 
