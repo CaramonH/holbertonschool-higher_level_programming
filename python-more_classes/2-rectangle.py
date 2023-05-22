@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-# 2-rectangle.py
 """
+the tangle of rec
 """
 
 
