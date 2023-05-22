@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # 2-rectangle.py
 """
-A class Rectangle that defines a rectangle
 """
 
 
