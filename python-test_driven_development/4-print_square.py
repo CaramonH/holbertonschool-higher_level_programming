@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 # 4-print_square.py
+"""Defines a square-printing function."""
 
 
 def print_square(size):
@@ -23,4 +24,3 @@ def print_square(size):
     for i in range(size):
         [print("#", end="") for j in range(size)]
         print("")
-
