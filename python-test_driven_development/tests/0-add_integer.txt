@@ -1,106 +1,107 @@
-#doctest_0-add_integer.py
-"""add_integer() returns the sum of two arguments"""
+'Test for 0-add_integer module'
+
+'Function to test:   add_integer()'
 
 >>> add_integer = __import__('0-add_integer').add_integer
 
-'pos ints'
->>> add_integer(1,2)
-3
+'positive integer values'
+>>> add_integer(1, 23)
+24
 
-'neg ints'
->>> add_integer(-1, -2)
--3
+'negative integer values'
+>>> add_integer(-3, -10)
+-13
 
-'pos floats'
->>> add_integer(1.2, 3.4)
-4
+'positive floating values'
+>>> add_integer(5.8, 9.1)
+14
 
-'neg floats'
->>> add_integer(-1.2, -3.4)
--4
+'negative floating values'
+>>> add_integer(-2.9, -8.3)
+-10
 
-'one arg'
->>> add_integer(1)
-99
+'only one argument'
+>>> add_integer(5)
+103
 
-'b empty'
->>> add_integer(1,)
-99
+'b argument is empty'
+>>> add_integer(5,)
+103
 
-'a int, b string'
->>> add_integer(1, "butt")
+'a is an integer and b is a string'
+>>> add_integer(2, "Meco")
 Traceback (most recent call last):
 ...
-TypeError: b must be an add_integer
+TypeError: b must be an integer
 
-'b int, a string'
->>> add_integer("butt", 1)
+'b is an integer and a is a string'
+>>> add_integer("Meco", 2)
 Traceback (most recent call last):
 ...
-TypeError: a must be an add_integer
+TypeError: a must be an integer
 
-'a & b empty'
+'a and b empty'
 >>> add_integer()
 Traceback (most recent call last):
 ...
 TypeError: add_integer() missing 1 required positional argument: 'a'
 
-'a bool'
+'a is a bool'
 >>> add_integer(False, 4)
 Traceback (most recent call last):
 ...
 TypeError: a must be an integer
 
-'a tuple'
+'a is a tuple'
 >>> add_integer((3, 5), 4)
 Traceback (most recent call last):
 ...
 TypeError: a must be an integer
 
-'a list'
+'a is a list'
 >>> add_integer([3, 5], 4)
 Traceback (most recent call last):
 ...
 TypeError: a must be an integer
 
-'a dict'
+'a is a dict'
 >>> add_integer({3, 5}, 4)
 Traceback (most recent call last):
 ...
 TypeError: a must be an integer
 
-'b bool'
+'b is a bool'
 >>> add_integer(3, False)
 Traceback (most recent call last):
 ...
 TypeError: b must be an integer
 
-'b tuple'
+'b is a tuple'
 >>> add_integer(2, (3, 5))
 Traceback (most recent call last):
 ...
 TypeError: b must be an integer
 
-'b list'
+'b is a list'
 >>> add_integer(5, [3, 5])
 Traceback (most recent call last):
 ...
 TypeError: b must be an integer
 
-'b dict'
+'b is a dict'
 >>> add_integer(8, {3, 5})
 Traceback (most recent call last):
 ...
 TypeError: b must be an integer
 
-'a infinity float'
+'a is an infinity float'
 >>> import sys
 >>> add_integer(sys.float_info.max + 1e292)
 Traceback (most recent call last):
 ...
 TypeError: a must be an integer
 
-'b infinity float'
+'b is an infinity float'
 >>> import sys
 >>> add_integer(3, sys.float_info.max + 1e292)
 Traceback (most recent call last):
