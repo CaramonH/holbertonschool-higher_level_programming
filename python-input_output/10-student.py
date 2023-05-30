@@ -11,12 +11,7 @@ class Student:
 
     def to_json(self, attrs=None):
         """ Dictionary representation of a Student instance """
-        if attrs is None:
-            return cars(self)
-        new_dict = {}
-        for i in attrs:
-            try:
-                new_dict[i] = vars(self)[i]
-            except Exception:
-                pass
-        return new_dict
+        if (type(attrs) == list and
+                all(type(ele) == str for ele in attrs)):
+            return {k: getattr(self, k) for k in attrs if hasattr(self, k)}
+        return self.__dict__
