@@ -1,404 +1,224 @@
 #!/usr/bin/python3
-""" This module is a unittest for the Rectangle class """
-
+"""
+Unittesting for rectangle class
+"""
 import unittest
-import os
-import io
-import sys
-from models.base import Base
 from models.rectangle import Rectangle
+from io import StringIO
+import sys
+from unittest.mock import patch, MagicMock
+import json
 
 
 class TestRectangle(unittest.TestCase):
-    """ Test class for Rectangle class """
-    def setUp(self):
-        """Set up test method"""
-        print("Rectangle setUp")
+    """
+    class for testing Rectangle class
+    """
+    def test_valid_attributes_2(self):
+        '''test valid attribute values x2'''
+        rectangle = Rectangle(10, 99)
+        self.assertEqual(rectangle.width, 10)
+        self.assertEqual(rectangle.height, 99)
 
-        self.capture_output = io.StringIO()
-        sys.stdout = self. capture_output
-
-        self.rectangle = Rectangle(1, 1)
-
-        # reset __nb_objects to 0 before each test
-        Base._Base__nb_objects = 0
-        # print(f"Base.__nb_objects after reset: {Base._Base__nb_objects}")
-
-    def tearDown(self):
-        """Tear down test method"""
-        print("Rectangle tearDown")
-
-        sys.stdout = sys.__stdout__
-
-        del self.rectangle
-        try:
-            os.remove("Rectangle.json")
-        except FileNotFoundError:
-            pass
-
-    # test id assignment and if it increments correctly
-    def test_id(self):
-        """Test __init__ method:
-        id assignment in the Rectangle class.
-        """
-        print(f"Actual id: {self.rectangle.id}")
-        self.assertEqual(self.rectangle.id, 1)
-        rectangle2 = Rectangle(50, 50)
-        print(f"Actual id: {rectangle2.id}")
-        self.assertEqual(rectangle2.id, 1)
-        rectangle3 = Rectangle(1, 1)
-        print(f"Actual id: {rectangle3.id}")
-        self.assertEqual(rectangle3.id, 2)
-
-    # test to many args to init method
-    def test_too_many_args(self):
-        """
-        test too many args to init
-        """
-        with self.assertRaises(TypeError):
-            r = Rectangle(1, 1, 1, 1, 1, 1, 1)
-
-    def test_rectangle_creation(self):
-        """ Test Rectangle creation """
-        # basic rectangle
-        r = Rectangle(1, 2)
-        self.assertEqual(r.width, 1)
-        self.assertEqual(r.height, 2)
-        self.assertEqual(r.x, 0)
-        self.assertEqual(r.y, 0)
-
-        # rectangle with x
-        r = Rectangle(1, 2, 3)
-        self.assertEqual(r.width, 1)
-        self.assertEqual(r.height, 2)
-        self.assertEqual(r.x, 3)
-        self.assertEqual(r.y, 0)
-
-        # rectangle with y
-        r = Rectangle(1, 2, 3, 4)
-        self.assertEqual(r.width, 1)
-        self.assertEqual(r.height, 2)
-        self.assertEqual(r.x, 3)
-        self.assertEqual(r.y, 4)
-
-        # rectangle with id
-        r = Rectangle(1, 2, 3, 4, 5)
-        self.assertEqual(r.width, 1)
-        self.assertEqual(r.height, 2)
-        self.assertEqual(r.x, 3)
-        self.assertEqual(r.y, 4)
-        self.assertEqual(r.id, 5)
-
-        # rectangle with negative width
-        with self.assertRaises(ValueError):
-            r = Rectangle(-1, 2, 3, 4, 5)
-
-        # rectangle with negative height
-        with self.assertRaises(ValueError):
-            r = Rectangle(1, -2, 3, 4, 5)
-
-        # rectangle with negative x
-        with self.assertRaises(ValueError):
-            r = Rectangle(1, 2, -3, 4, 5)
-
-        # rectangle with negative y
-        with self.assertRaises(ValueError):
-            r = Rectangle(1, 2, 3, -4, 5)
-
-        # rectangle with zero width
-        with self.assertRaises(ValueError):
-            r = Rectangle(0, 2, 3, 4, 5)
-
-        # rectangle with zero height
-        with self.assertRaises(ValueError):
-            r = Rectangle(1, 0, 3, 4, 5)
-
-        # rectangle with string width
-        with self.assertRaises(TypeError):
-            r = Rectangle("string", 2, 3, 4, 5)
-
-        # rectangle with string height
-        with self.assertRaises(TypeError):
-            r = Rectangle(1, "string", 3, 4, 5)
-
-        # rectangle with string x
-        with self.assertRaises(TypeError):
-            r = Rectangle(1, 2, "string", 4, 5)
-
-        # rectangle with string y
-        with self.assertRaises(TypeError):
-            r = Rectangle(1, 2, 3, "string", 5)
-
-    def test_width(self):
-        """ Test width getter and setter:
-        width must be an integer, positive and non-zero """
-        # test width getter
-        self.assertEqual(self.rectangle.width, 1)
-        # test width setter
-        self.rectangle.width = 50
-        # test width getter after setter
-        self.assertEqual(self.rectangle.width, 50)
-        # test width setter with negative value
-        with self.assertRaises(ValueError):
-            self.rectangle.width = -1
-        # test width setter with zero
-        with self.assertRaises(ValueError):
-            self.rectangle.width = 0
-        # test width setter with string
-        with self.assertRaises(TypeError):
-            self.rectangle.width = "string"
-        # test width setter with list
-        with self.assertRaises(TypeError):
-            self.rectangle.width = [1, 2, 3]
-        # test width setter with tuple
-        with self.assertRaises(TypeError):
-            self.rectangle.width = (1, 2, 3)
-        # test width setter with dict
-        with self.assertRaises(TypeError):
-            self.rectangle.width = {"key": 1, "key2": 2}
-
-    def test_height(self):
-        """ Test height getter and setter:
-        height must be an integer, positive and non-zero """
-        # test height getter
-        self.assertEqual(self.rectangle.height, 1)
-        # test height setter
-        self.rectangle.height = 50
-        # test height getter after setter
-        self.assertEqual(self.rectangle.height, 50)
-
-        # test height setter with negative value
-        with self.assertRaises(ValueError):
-            self.rectangle.height = -1
-        # test height setter with zero
-        with self.assertRaises(ValueError):
-            self.rectangle.height = 0
-        # test height setter with string
-        with self.assertRaises(TypeError):
-            self.rectangle.height = "string"
-        # test height setter with list
-        with self.assertRaises(TypeError):
-            self.rectangle.height = [1, 2, 3]
-        # test height setter with tuple
-        with self.assertRaises(TypeError):
-            self.rectangle.height = (1, 2, 3)
-        # test height setter with dict
-        with self.assertRaises(TypeError):
-            self.rectangle.height = {"key": 1, "key2": 2}
-
-    def test_x(self):
-        """ test x getter and setter:
-        x must be an integer, positive and zero """
-        # test x getter
-        self.assertEqual(self.rectangle.x, 0)
-        # test x setter
-        self.rectangle.x = 50
-        # test x getter after setter
-        self.assertEqual(self.rectangle.x, 50)
-
-        # test x setter with negative value
-        with self.assertRaises(ValueError):
-            self.rectangle.x = -1
-        # test x setter with string
-        with self.assertRaises(TypeError):
-            self.rectangle.x = "string"
-        # test x setter with list
-        with self.assertRaises(TypeError):
-            self.rectangle.x = [1, 2, 3]
-        # test x setter with tuple
-        with self.assertRaises(TypeError):
-            self.rectangle.x = (1, 2, 3)
-        # test x setter with dict
-        with self.assertRaises(TypeError):
-            self.rectangle.x = {"key": 1, "key2": 2}
-
-    def test_y(self):
-        """ Test y getter and setter:
-        y must be an integer, positive and zero """
-        # test y getter
-        self.assertEqual(self.rectangle.y, 0)
-        # test y setter
-        self.rectangle.y = 50
-        # test y getter after setter
-        self.assertEqual(self.rectangle.y, 50)
-
-        # test y setter with negative value
-        with self.assertRaises(ValueError):
-            self.rectangle.y = -1
-        # test y setter with string
-        with self.assertRaises(TypeError):
-            self.rectangle.y = 'string'
-        # test y setter with list
-        with self.assertRaises(TypeError):
-            self.rectangle.y = [1, 2, 3]
-        # test y setter with tuple
-        with self.assertRaises(TypeError):
-            self.rectangle.y = (1, 2, 3)
-        # test y setter with dict
-        with self.assertRaises(TypeError):
-            self.rectangle.y = {"key": 1, "key2": 2}
-
-    def test_area(self):
-        """ Test area method:
-        area = width * height, always positive """
-        # test area
-        self.assertEqual(self.rectangle.area(), 1)
-        # test area with width setter
-        self.rectangle.width = 50
-        self.assertEqual(self.rectangle.area(), 50)
-        # test area with height setter
-        self.rectangle.height = 50
-        self.assertEqual(self.rectangle.area(), 2500)
-
-        # test area with negative width
-        with self.assertRaises(ValueError):
-            self.rectangle.width = -1
-            self.rectangle.area()
-        # test area with negative height
-        with self.assertRaises(ValueError):
-            self.rectangle.height = -1
-            self.rectangle.area()
-
-    def test_str(self):
-        """ Test __str__ method:
-        check if instance of the class matches
-        the expected string representation.
-        [Rectangle] (<id>) <x>/<y> - <width>/<height>
-        """
-        self.rectangle = Rectangle(1, 2, 3, 4, 5)
-        self.assertEqual(self.rectangle.__str__(), "[Rectangle] (5) 3/4 - 1/2")
-
-    def test_display(self):
-        """ Test display method:
-        print the Rectangle instance to stdout """
-        # Test display
-        self.rectangle = Rectangle(2, 2)
-        self.rectangle.display()
-        self.assertEqual(self.capture_output.getvalue(), "##\n##\n")
-
-    def test_display_with_x(self):
-        # Test display with x
-        self.rectangle = Rectangle(2, 2, 2)
-        self.rectangle.display()
-        self.assertEqual(self.capture_output.getvalue(), "  ##\n  ##\n")
-
-    def test_display_with_y(self):
-        # Test display with x and y
-        self.rectangle = Rectangle(2, 2, 2, 2)
-        self.rectangle.display()
-        self.assertEqual(self.capture_output.getvalue(), "\n\n  ##\n  ##\n")
-
-    def to_dictionary(self):
-        """ Test to_dictionary method:
-        Returns a dictionary representation of a Rectangle """
-        self.assertTrue(hasattr(Rectangle, "to_dictionary"))
-
-        # test to_dictionary
-        self.rectangle = Rectangle(1, 2, 3, 4, 5)
-        expected_dict = {'x': 3, 'y': 4, 'id': 5, 'height': 2, 'width': 1}
-        self.assertEqual(self.rectangle.to_dictionary(), expected_dict)
-
-    def test_update_positional_args(self):
-        """ test update method:
-        assigns an argument to each attribute
-        """
-        # test update id
-        self.rectangle.update(10)
-        self.assertEqual(self.rectangle.id, 10)
-        # test update width
-        self.rectangle.update(10, 20)
-        self.assertEqual(self.rectangle.width, 20)
-        # test update height
-        self.rectangle.update(10, 20, 30)
-        self.assertEqual(self.rectangle.height, 30)
-        # test update x
-        self.rectangle.update(10, 20, 30, 40)
-        self.assertEqual(self.rectangle.x, 40)
-        # test update y
-        self.rectangle.update(10, 20, 30, 40, 50)
-        self.assertEqual(self.rectangle.y, 50)
-
-    def test_update_kw_args(self):
-        """Test updating attributes with keyword arguments"""
-        rectangle = Rectangle(1, 1, 1, 1, 1)
-        rectangle.update(id=2, width=3, height=4, x=5, y=6)
-        self.assertEqual(rectangle.id, 2)
-        self.assertEqual(rectangle.width, 3)
-        self.assertEqual(rectangle.height, 4)
+    def test_valid_attributes_4(self):
+        '''test valid attribute values x4'''
+        rectangle = Rectangle(10, 20, 5, 5)
+        self.assertEqual(rectangle.width, 10)
+        self.assertEqual(rectangle.height, 20)
         self.assertEqual(rectangle.x, 5)
-        self.assertEqual(rectangle.y, 6)
-
-    def test_update_args_and_kwargs(self):
-        """ test update method:
-        assigns an argument to each attribute using *args and **kwargs
-        """
-        rectangle = Rectangle(1, 1, 1, 1, 1)
-        rectangle.update(2, 3, 4, 5, 6, id=7, width=8, height=9, x=10, y=11)
-        self.assertEqual(rectangle.id, 2)
-        self.assertEqual(rectangle.width, 3)
-        self.assertEqual(rectangle.height, 4)
-        self.assertEqual(rectangle.x, 5)
-        self.assertEqual(rectangle.y, 6)
-
-    def test_create_with_attributes(self):
-        """ Test if create method sets attributes correctly """
-        attributes = {'id': 1, 'width': 2, 'height': 3, 'x': 4, 'y': 5}
-        rectangle = Rectangle.create(**attributes)
-        self.assertEqual(rectangle.id, 1)
-        self.assertEqual(rectangle.width, 2)
-        self.assertEqual(rectangle.height, 3)
-        self.assertEqual(rectangle.x, 4)
         self.assertEqual(rectangle.y, 5)
 
-    def test_save_to_file_none(self):
-        """ Test save_to_file method:
-        writes the JSON string representation of None to a file
-        """
-        # test save_to_file with None
-        Rectangle.save_to_file(None)
-        with open("Rectangle.json", "r") as file:
-            self.assertEqual(file.read(), "[]")
+    def test_valid_attributes_5(self):
+        '''test valid attribute values x5'''
+        rectangle = Rectangle(10, 20, 5, 5, 99)
+        self.assertEqual(rectangle.width, 10)
+        self.assertEqual(rectangle.height, 20)
+        self.assertEqual(rectangle.x, 5)
+        self.assertEqual(rectangle.y, 5)
+        self.assertEqual(rectangle.id, 99)
 
-    def test_save_to_file_empty_list(self):
-        """ Test save_to_file method:
-        writes the JSON string representation of empty list to a file
-        """
-        # test save_to_file with empty list
-        Rectangle.save_to_file([])
-        with open("Rectangle.json", "r") as file:
-            self.assertEqual(file.read(), "[]")
+    def test_invalid_width(self):
+        '''test invalid width values'''
+        with self.assertRaises(TypeError):
+            Rectangle("string", 20, 5, 5)
 
-    def test_save_to_file_normal_list(self):
-        """Test if save_to_file method saves a list with a single
-        Rectangle to file"""
-        r = Rectangle(1, 2)
-        Rectangle.save_to_file([r])
-        with open("Rectangle.json", "r") as file:
-            content = file.read()
-            expected_json = \
-                '[{"id": 1, "width": 1, "height": 2, "x": 0, "y": 0}]'
-            self.assertEqual(content, expected_json)
+    def test_invalid_height(self):
+        """test invalid height values"""
+        with self.assertRaises(TypeError):
+            Rectangle(20, "string", 5, 5)
 
-    def test_load_from_file_file_not_exist(self):
-        """Test load_from_file method when the file doesn't exist"""
-        rectangles = Rectangle.load_from_file()
-        self.assertEqual(rectangles, [])
+    def test_invalid_x(self):
+        """test invalid x values"""
+        with self.assertRaises(TypeError):
+            Rectangle(5, 20, "string", 5)
 
-    def test_load_from_file_file_exists(self):
-        """Test load_from_file method when the file exists"""
-        # Create a dummy file with sample JSON content
-        with open("Rectangle.json", "w") as file:
-            file.write('[{"id": 1, "width": 2, "height": 3, "x": 4, "y": 5}]')
+    def test_invalid_y(self):
+        """test invalid y values"""
+        with self.assertRaises(TypeError):
+            Rectangle(5, 20, 99, "string")
 
-        rectangles = Rectangle.load_from_file()
-        expected_rectangles = [Rectangle(2, 3, 4, 5, 1)]
+    def test_negative_width(self):
+        """test negative width"""
+        with self.assertRaises(ValueError):
+            Rectangle(-2, 3)
 
-        # Compare the attributes of the objects
-        self.assertEqual(rectangles[0].id, expected_rectangles[0].id)
-        self.assertEqual(rectangles[0].width, expected_rectangles[0].width)
-        self.assertEqual(rectangles[0].height, expected_rectangles[0].height)
-        self.assertEqual(rectangles[0].x, expected_rectangles[0].x)
-        self.assertEqual(rectangles[0].y, expected_rectangles[0].y)
+    def test_negative_height(self):
+        """test negative height"""
+        with self.assertRaises(ValueError):
+            Rectangle(2, -3)
+
+    def test_zero_width(self):
+        """test zero width"""
+        with self.assertRaises(ValueError):
+            Rectangle(0, 3)
+
+    def test_zero_height(self):
+        """test zero height"""
+        with self.assertRaises(ValueError):
+            Rectangle(5, 0)
+
+    def test_negative_x(self):
+        """test negative x"""
+        with self.assertRaises(ValueError):
+            Rectangle(1, 5, -2, 3)
+
+    def test_negative_y(self):
+        """test negative y"""
+        with self.assertRaises(ValueError):
+            Rectangle(1, 5, 2, -6)
+
+    def test_area(self):
+        r1 = Rectangle(5, 10)
+        result = r1.area()
+        self.assertEqual(result, 50)
+
+    def test_str(self):
+        r1 = Rectangle(5, 10, 2, 3, 1)
+        self.assertEqual(str(r1), "[Rectangle] (1) 2/3 - 5/10")
+
+    def test_display_without_xy(self):
+        r1 = Rectangle(5, 3)
+        
+        # Redirect stdout to capture the output
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        r1.display()
+
+        # Restore the original stdout
+        sys.stdout = sys.__stdout__
+
+        self.assertEqual(captured_output.getvalue(), "#####\n#####\n#####\n")
+
+    def test_display(self):
+        r1 = Rectangle(5, 3, 2, 2, 1)
+        
+        # Redirect stdout to capture the output
+        captured_output = StringIO()
+        sys.stdout = captured_output
+
+        r1.display()
+
+        # Restore the original stdout
+        sys.stdout = sys.__stdout__
+
+        self.assertEqual(captured_output.getvalue(), "\n\n  #####\n  #####\n  #####\n")
+
+    def test_to_dict(self):
+        r1 = Rectangle(2, 3, 1, 1, 99)
+
+        self.assertEqual(r1.to_dictionary(), {'id': 99, 'width': 2, 'height': 3, 'x': 1, 'y': 1})
+
+    def test_update(self):
+        r1 = Rectangle(5, 3, 2, 2, 1)
+        r1.update(10, 7, 4, 4, 3)
+        
+        self.assertEqual(r1.id, 10)
+        self.assertEqual(r1.width, 7)
+        self.assertEqual(r1.height, 4)
+        self.assertEqual(r1.x, 4)
+        self.assertEqual(r1.y, 3)
+
+    def test_create(self):
+        r1 = Rectangle.create(**{'id': 89})
+
+        self.assertEqual(r1.id, 89)
+
+    def test_save_to_file_with_none(self):
+        # Patch the open function to capture the file output
+        with patch('builtins.open', create=True) as mock_open:
+            # Call the save_to_file method with None
+            Rectangle.save_to_file(None)
+
+            # Assert that open was called with the correct filename
+            mock_open.assert_called_once_with('Rectangle.json', 'w')
+
+            # Retrieve the write call arguments
+            write_args = mock_open.return_value.__enter__.return_value.write.call_args[0]
+
+            # Convert the JSON string to a dictionary
+            saved_data = json.loads(write_args[0])
+
+            # Assert that the saved data is an empty list
+            self.assertEqual(saved_data, [])
+
+    def test_save_to_file_with_empty_brackets(self):
+        # Patch the open function to capture the file output
+        with patch('builtins.open', create=True) as mock_open:
+            # Call the save_to_file method with None
+            Rectangle.save_to_file([])
+
+            # Assert that open was called with the correct filename
+            mock_open.assert_called_once_with('Rectangle.json', 'w')
+
+            # Retrieve the write call arguments
+            write_args = mock_open.return_value.__enter__.return_value.write.call_args[0]
+
+            # Convert the JSON string to a dictionary
+            saved_data = json.loads(write_args[0])
+
+            # Assert that the saved data is an empty list
+            self.assertEqual(saved_data, [])
+
+    def test_save_to_file_with_single_rectangle(self):
+        # Create a rectangle instance
+        r1 = Rectangle(1, 2)
+
+        # Patch the open function to capture the file output
+        with patch('builtins.open', create=True) as mock_open:
+            # Call the save_to_file method with a list containing the rectangle
+            Rectangle.save_to_file([r1])
+
+            # Assert that open was called with the correct filename
+            mock_open.assert_called_once_with('Rectangle.json', 'w')
+
+            # Retrieve the write call arguments
+            write_args = mock_open.return_value.__enter__.return_value.write.call_args[0]
+
+            # Convert the JSON string to a dictionary
+            saved_data = json.loads(write_args[0])
+
+            # Assert that the saved data is a list with a single rectangle dictionary
+            self.assertEqual(len(saved_data), 1)
+            self.assertEqual(saved_data[0]['id'], r1.id)
+            self.assertEqual(saved_data[0]['width'], r1.width)
+            self.assertEqual(saved_data[0]['height'], r1.height)
+            self.assertEqual(saved_data[0]['x'], r1.x)
+            self.assertEqual(saved_data[0]['y'], r1.y)
+
+    @patch('builtins.open', new_callable=MagicMock)
+    def test_load_from_file_file_not_found(self, mock_open):
+        mock_open.side_effect = FileNotFoundError
+        mock_open.return_value.__enter__.return_value.read.return_value = ""
+
+        # Call the load_from_file method
+        result = Rectangle.load_from_file()
+
+        # Assert that open was called with the correct filename
+        mock_open.assert_called_once_with('Rectangle.json', 'r', encoding='utf-8')
+
+        # Assert that the result is an empty list
+        self.assertEqual(result, [])
 
 
 if __name__ == '__main__':
