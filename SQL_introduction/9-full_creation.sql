@@ -1,6 +1,6 @@
 -- Comment
 CREATE table IF NOT EXISTS second_table (
-	is INT,
+	id INT,
 	name VARCHAR(256),
 	score INT
 );
