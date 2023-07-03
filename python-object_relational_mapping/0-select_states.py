@@ -1,23 +1,26 @@
 #!/usr/bin/python3
-""" Lists all states from the database hbtn_0e_0_usa """
-
+"""
+Write a script that lists all states from the database hbtn_0e_0_usa
+"""
 import MySQLdb
+import sys
 
 
-def print_state():
-    from sys import argv
-    db = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
-                         passwd=argv[2], database=argv[3])
+def list_states():
+    """List the states"""
+    db = MySQLdb.connect(host="localhost", port=3306, user=sys.argv[1],
+                         passwd=sys.argv[2], db=sys.argv[3])
 
-    cursor = db.cursor()
+    cur = db.cursor()
 
-    cursor.execute("SELECT * FROM states")
-    for rows in cursor.fetchall():
-        print(rows)
+    cur.execute("SELECT * FROM states ORDER BY id")
+    rows = cur.fetchall()
+    for row in rows:
+        print(row)
 
-    cursor.close()
+    cur.close()
     db.close()
 
 
 if __name__ == "__main__":
-    print_state()
+    list_states()
