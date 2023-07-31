@@ -1,4 +1,7 @@
 #!/usr/bin/node
-console.log('C is fun');
-console.log('Python is cool');
-console.log('JavaScript is amazing');
+let theString = 'C is fun';
+console.log(theString);
+theString = 'Python is cool';
+console.log(theString);
+theString = 'JavaScript is amazing';
+console.log(theString);
