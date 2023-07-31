@@ -4,7 +4,7 @@ const myObject = {
   value: 12
 };
 console.log(myObject);
-const updateInfo = {
+const updatedInfo = {
   value: 89
 };
 const update = Object.assign({}, myObject, updatedInfo);
