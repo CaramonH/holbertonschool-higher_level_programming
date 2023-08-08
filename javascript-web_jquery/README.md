@@ -1,1 +1,1 @@
-This is a README for JavaScript Web JQuery
+This is a README for javascript web jquery :)
